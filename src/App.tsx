@@ -1,14 +1,31 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { useState } from 'react';
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
+import Button from '@mui/material/Button';
 
-function App() {
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#1976d2',
+    },
+    secondary: {
+      main: '#9c27b0',
+    },
+  },
+});
+
+const App: React.FC = () => {
   const [count, setCount] = useState(0);
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <div>
+        <Button variant="contained">MUI Button</Button>
         <a href="https://vite.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -28,8 +45,8 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
-    </>
+    </ThemeProvider>
   );
-}
+};
 
 export default App;
