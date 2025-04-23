@@ -1,9 +1,25 @@
+import { DetailedMovieDTO, PageMovieDTO } from '../models';
 import { api } from './axios';
 
-export const getAllMovies = () => {};
+const apiUrlPath = 'movies';
 
-export const getMovieById = () => {};
+export const getAllMovies = async (
+  page: number,
+  size: number
+): Promise<PageMovieDTO> => {
+  const response = await api.get<PageMovieDTO>(`/${apiUrlPath}`, {
+    params: { page, size },
+  });
 
-export const getMoviesByTopRevenue = () => {};
+  return response.data;
+};
 
-export const getTopRevenueByYear = () => {};
+export const getMovieById = async (id: string): Promise<DetailedMovieDTO> => {
+  const response = await api.get<DetailedMovieDTO>(`/${apiUrlPath}/${id}`);
+
+  return response.data;
+};
+
+export const getMoviesByTopRevenue = async () => {};
+
+export const getTopRevenueByYear = async () => {};
