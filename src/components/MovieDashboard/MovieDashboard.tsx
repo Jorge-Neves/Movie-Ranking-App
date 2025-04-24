@@ -1,16 +1,15 @@
 import { FC, useEffect, useState, useCallback } from 'react';
-import {
-  Box,
-  Button,
-  useTheme,
-  Typography,
-  CircularProgress,
-} from '@mui/material';
+import { Box, useTheme, Typography, CircularProgress } from '@mui/material';
 
 import MovieListItem from './MovieListItem';
 import MovieButton from './MovieButton';
 import { DetailedMovieDTO, MovieDTO } from '../../models';
-import { getAllMockMovies, getMockMovieById } from '../../api/mockApi';
+import {
+  getAllMockMovies,
+  getMockMovieById,
+  getMockMoviesByTopRevenue,
+  getMockTopRevenueByYear,
+} from '../../api/mockApi';
 import refreshIcon from '../../assets/refresh.svg';
 import MovieModal from './MovieModal';
 
@@ -24,22 +23,6 @@ const MovieDashboard: FC = () => {
   const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
-  const handleFilterTopTen = () => {
-    setIsListFiltered(true);
-  };
-
-  const handleFilterPerYear = () => {
-    setIsListFiltered(true);
-  };
-
-  const handleResetList = () => {
-    setIsListFiltered(false);
-  };
-
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
 
   const handlePickAMovie = (movieValue: MovieDTO) => {
     getMockMovieById()
@@ -71,6 +54,37 @@ const MovieDashboard: FC = () => {
   useEffect(() => {
     fetchMovies();
   }, []);
+
+  const handleFilterTopTen = async () => {
+    setIsListFiltered(true);
+    const topMovies = await getMockMoviesByTopRevenue();
+    setMovies(topMovies);
+    setIsListFiltered(true);
+    setHasMore(false);
+  };
+
+  const handleFilterPerYear = async () => {
+    const year = 2010;
+    const topByYear = await getMockTopRevenueByYear(year);
+    setMovies(topByYear);
+    setIsListFiltered(true);
+    setHasMore(false); // disable infinite scroll
+  };
+
+  const handleResetList = () => {
+    setIsListFiltered(false);
+    setMovies([]);
+    setPage(0);
+    setHasMore(true);
+    setLoading(true);
+    setTimeout(() => {
+      fetchMovies();
+    }, 2000);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   const handleScroll = useCallback(() => {
     const container = document.getElementById('scrollableDiv');
@@ -114,7 +128,7 @@ const MovieDashboard: FC = () => {
             onClick={handleFilterPerYear}
           />
           {isListFiltered && (
-            <div style={{ width: '24px', height: '24px' }}>
+            <div style={{ cursor: 'pointer', width: '24px', height: '24px' }}>
               <img
                 src={refreshIcon}
                 onClick={handleResetList}
