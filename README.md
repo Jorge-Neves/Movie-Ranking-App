@@ -12,14 +12,14 @@ Check out the production site here:
 
 ---
 
-## ⚙️ Recommended Setup
+## Recommended Setup
 
 * **Node.js:** v23 or later
 * **Package manager:** npm
 
 ---
 
-## 💻 Development Setup
+## Development Setup
 
 1. **Clone the repository**
 
@@ -42,7 +42,7 @@ Check out the production site here:
 
 ---
 
-## 🧹 Code Quality
+## Code Quality
 
 Before pushing any changes to this repo please run the following commands
 
@@ -60,15 +60,15 @@ Before pushing any changes to this repo please run the following commands
 
 ---
 
-## 🌍 Production Site
+## Production Site
 
 The app is deployed to Netlify at:
 
-👉 [https://movie-ranking-app-production.netlify.app/](https://movie-ranking-app-production.netlify.app/)
+[https://movie-ranking-app-production.netlify.app/](https://movie-ranking-app-production.netlify.app/)
 
 ---
 
-## 🤝 How to Contribute
+## How to Contribute
 
 1. **Create an issue**
 
@@ -111,6 +111,6 @@ The app is deployed to Netlify at:
 
 ---
 
-## 📄 License
+## License
 
 This project is open-source and free to use under the [MIT License](LICENSE).
