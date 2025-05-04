@@ -1,4 +1,4 @@
-import { MovieDTO } from './movie.types';
+import { MovieDTO } from "./movie.types";
 
 export interface Sort {
   empty: boolean;
