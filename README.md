@@ -44,6 +44,8 @@ Check out the production site here:
 
 ## 🧹 Code Quality
 
+Before pushing any changes to this repo please run the following commands
+
 * **Lint the code**
 
   ```bash
