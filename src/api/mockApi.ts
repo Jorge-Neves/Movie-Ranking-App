@@ -1,9 +1,6 @@
-import { DetailedMovieDTO, MovieDTO, PageMovieDTO } from '../models';
-import movieData from '../mock/mockMovieList.json';
-import movieDetails from '../mock/mockMovieDetails.json';
-import { api } from './axios';
-
-const apiUrlPath = 'movies';
+import { DetailedMovieDTO, MovieDTO } from "../models";
+import movieData from "../mock/mockMovieList.json";
+import movieDetails from "../mock/mockMovieDetails.json";
 
 export const PAGE_SIZE = 10;
 
@@ -14,7 +11,7 @@ export interface MockMovieResponse {
 }
 
 export const getAllMockMovies = async (
-  pageParam = 0
+  pageParam = 0,
 ): Promise<MockMovieResponse> => {
   const start = pageParam * PAGE_SIZE;
   const end = start + PAGE_SIZE;
@@ -30,18 +27,18 @@ export const getMockMovieById = async (): Promise<DetailedMovieDTO> => {
 
 export const getMockMoviesByTopRevenue = async (): Promise<MovieDTO[]> => {
   return movieData.content
-    .filter((movie: MovieDTO) => typeof movie.revenue === 'number')
+    .filter((movie: MovieDTO) => typeof movie.revenue === "number")
     .sort((a, b) => (b.revenue ?? 0) - (a.revenue ?? 0))
     .slice(0, 10);
 };
 
 export const getMockTopRevenueByYear = async (
-  year: number
+  year: number,
 ): Promise<MovieDTO[]> => {
   return movieData.content
     .filter(
       (movie: MovieDTO) =>
-        movie.year === year && typeof movie.revenue === 'number'
+        movie.year === year && typeof movie.revenue === "number",
     )
     .sort((a, b) => (b.revenue ?? 0) - (a.revenue ?? 0))
     .slice(0, 10);

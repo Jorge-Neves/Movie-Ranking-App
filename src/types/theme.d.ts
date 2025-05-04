@@ -1,14 +1,13 @@
-import '@mui/material/styles';
+import "@mui/material/styles";
 
-declare module '@mui/material/styles' {
+declare module "@mui/material/styles" {
   interface Palette {
     custom: {
       bg: string;
       headingText: string;
       listTitle: string;
-      listDivider1: string;
+      listDivider: string;
       listText: string;
-      listDivider2: string;
       header: string;
       buttonBorder: string;
       buttonText: string;
@@ -16,8 +15,10 @@ declare module '@mui/material/styles' {
       buttonBg: string;
       buttonBgFocused: string;
       modalText: string;
+      modalTextCredits: string;
       modalTitle: string;
       modalLabels: string;
+      modalDivider;
       modalNames: string;
       modalCloseButton: string;
       dropdownTitle: string;
@@ -30,9 +31,8 @@ declare module '@mui/material/styles' {
       bg?: string;
       headingText?: string;
       listTitle?: string;
-      listDivider1?: string;
+      listDivider?: string;
       listText?: string;
-      listDivider2?: string;
       header?: string;
       buttonBorder?: string;
       buttonText?: string;
@@ -40,7 +40,9 @@ declare module '@mui/material/styles' {
       buttonBg?: string;
       buttonBgFocused?: string;
       modalText?: string;
+      modalTextCredits?: string;
       modalTitle?: string;
+      modalDivider?: string;
       modalLabels?: string;
       modalNames?: string;
       modalCloseButton?: string;
