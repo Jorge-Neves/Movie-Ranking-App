@@ -40,6 +40,8 @@ Check out the production site here:
    npm run dev
    ```
 
+After running npm run dev (assuming the port isnt occupied by any other application you are running locally) you can locally view the app at http://localhost:5173/
+
 ---
 
 ## Code Quality
