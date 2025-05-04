@@ -1,11 +1,5 @@
 import { FC, useEffect, useState, useCallback, useRef } from 'react';
-import {
-  Box,
-  useTheme,
-  Typography,
-  CircularProgress,
-  Popover,
-} from '@mui/material';
+import { Box, useTheme, Typography, CircularProgress } from '@mui/material';
 
 import MovieListItem from './MovieListItem';
 import MovieButton from './MovieButton';
