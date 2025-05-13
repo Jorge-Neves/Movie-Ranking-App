@@ -1,24 +1,19 @@
-import { FC, useEffect, useState, useCallback, useRef } from "react";
-import {
-  Box,
-  useTheme,
-  Typography,
-  CircularProgress,
-  Popover,
-} from "@mui/material";
+import { FC, useEffect, useState, useCallback, useRef } from 'react';
+import { Box, useTheme, Typography, CircularProgress } from '@mui/material';
 
-import MovieListItem from "./MovieListItem";
-import MovieButton from "./MovieButton";
-import { DetailedMovieDTO, MovieDTO } from "../../models";
-import refreshIcon from "../../assets/refresh.svg";
-import MovieModal from "./MovieModal/MovieModal";
+import MovieListItem from './MovieListItem';
+import MovieButton from './MovieButton';
+import { DetailedMovieDTO, MovieDTO } from '../../models';
+import refreshIcon from '../../assets/refresh.svg';
+import MovieModal from './MovieModal/MovieModal';
 import {
   getAllMoviesPaginated,
   getMovieById,
   getMoviesByTopRevenue,
   getTopRevenueByYear,
-} from "../../api/moviesApi";
-import MovieListHeader from "./MovieListHeader";
+} from '../../api/moviesApi';
+import MovieListHeader from './MovieListHeader';
+import YearPopover from './YearPopover';
 
 const MovieList: FC = () => {
   const theme = useTheme();
@@ -38,7 +33,7 @@ const MovieList: FC = () => {
   };
 
   const handleOpenYearPopover = (
-    event: React.MouseEvent<HTMLButtonElement>,
+    event: React.MouseEvent<HTMLButtonElement>
   ) => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,18 +58,18 @@ const MovieList: FC = () => {
       try {
         const data = await getAllMoviesPaginated(
           pageToFetch !== undefined ? pageToFetch : page,
-          20,
+          20
         );
         setMovies((prev) => [...prev, ...data.content]);
         setPage(data.number + 1);
         setHasMore(!data.last);
       } catch (error) {
-        console.error("Failed to fetch movies", error);
+        console.error('Failed to fetch movies', error);
       } finally {
         setLoading(false);
       }
     },
-    [page, loading, hasMore],
+    [page, loading, hasMore]
   );
 
   useEffect(() => {
@@ -95,8 +90,8 @@ const MovieList: FC = () => {
   }, [loading, hasMore, fetchMovies]);
 
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
   const handleShowTopRevenue = async (): Promise<void> => {
@@ -112,14 +107,14 @@ const MovieList: FC = () => {
 
       setMovies(rankedMovies);
     } catch (error) {
-      console.error("Failed to load top revenue movies", error);
+      console.error('Failed to load top revenue movies', error);
     } finally {
       setLoading(false);
     }
   };
 
   const handleShowTopRevenueByYear = async (
-    yearSelected: number,
+    yearSelected: number
   ): Promise<void> => {
     setLoading(true);
     setIsInfiniteScroll(false);
@@ -133,7 +128,7 @@ const MovieList: FC = () => {
 
       setMovies(rankedMovies);
     } catch (error) {
-      console.error("Failed to load top revenue by year", error);
+      console.error('Failed to load top revenue by year', error);
     } finally {
       handleCloseYearPopover();
       setLoading(false);
@@ -150,19 +145,28 @@ const MovieList: FC = () => {
 
   return (
     <>
-      <Box sx={{ width: "938px", marginTop: "24px" }}>
+      <Box sx={{ width: '938px', marginTop: '24px' }}>
         <Typography
           sx={{
-            color: theme.palette.custom?.headingText || "black",
-            fontFamily: "Roboto",
-            fontWeight: "Regular",
-            fontSize: "24px",
+            color: theme.palette.custom?.headingText || 'black',
+            fontFamily: 'Roboto',
+            fontWeight: 'Regular',
+            fontSize: '24px',
             mb: 2,
           }}
         >
           Movie Ranking
         </Typography>
-        <Box sx={{ marginTop: "24px", mb: "46px", display: "flex", gap: 2 }}>
+        <Box
+          sx={{
+            marginTop: '24px',
+            mb: '46px',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
           <MovieButton label="Top 10 Revenue" onClick={handleShowTopRevenue} />
           <MovieButton
             label="Top 10 Revenue per Year"
@@ -171,57 +175,13 @@ const MovieList: FC = () => {
               handleOpenYearPopover(event)
             }
           />
-          <Popover
-            open={Boolean(anchorEl)}
+          <YearPopover
             anchorEl={anchorEl}
             onClose={handleCloseYearPopover}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                width: "178px",
-                minHeight: "478px",
-              }}
-            >
-              <Typography
-                sx={{
-                  color: theme.palette.custom.dropdownTitle,
-                  fontSize: "12px",
-                  margin: "18px",
-                }}
-              >
-                Select a year
-              </Typography>
-              <Box sx={{ marginBottom: "13px" }}>
-                {[...Array(17)].map((_, index) => {
-                  const year = 2016 - index;
-                  return (
-                    <Typography
-                      key={`${year}-select-popover`}
-                      onClick={() => handleShowTopRevenueByYear(year)}
-                      sx={{
-                        color: theme.palette.custom.dropdownItems,
-                        cursor: "pointer",
-                        fontSize: "14px",
-                        margin: "4px 0",
-                      }}
-                    >
-                      {year}
-                    </Typography>
-                  );
-                })}
-              </Box>
-            </Box>
-          </Popover>
+            onYearSelect={handleShowTopRevenueByYear}
+          />
           {!isInfiniteScroll && (
-            <div style={{ cursor: "pointer", width: "24px", height: "24px" }}>
+            <div style={{ cursor: 'pointer', width: '24px', height: '24px' }}>
               <img
                 src={refreshIcon}
                 onClick={handleResetList}
@@ -235,7 +195,7 @@ const MovieList: FC = () => {
           <Box
             id="scrollableDiv"
             sx={{
-              height: "fit-content",
+              height: 'fit-content',
             }}
           >
             <Box display="flex" flexDirection="column" gap={2}>
@@ -249,7 +209,7 @@ const MovieList: FC = () => {
             </Box>
 
             {loading && (
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                 <CircularProgress />
               </Box>
             )}
@@ -276,7 +236,7 @@ const MovieList: FC = () => {
               ))
             )}
             {loading && (
-              <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                 <CircularProgress />
               </Box>
             )}
